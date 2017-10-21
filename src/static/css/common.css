@@ -1,4 +1,4 @@
-body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, input, p, blockquote, tr, th, td {
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, input, p, blockquote, tr, th, td, span {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -8,7 +8,8 @@ body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, input, p, blockquote,
 body {
     font-size: 14px;
     font-family: "Microsoft YaHei",Tahoma,Helvetica,Arial,sans-serif;
-    color: #333333;
+    color: #333;
+    padding: 20px;
 }
 li {
     list-style: none;
