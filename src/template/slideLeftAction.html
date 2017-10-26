@@ -102,8 +102,12 @@
                 that.tch.direction = 'left'
                 item.style = {left: -distance + 'px'}
               } else {
-                that.tch.direction = 'right'
-                // item.style = {left: -distance + 'px'}
+                if (that.tch.originDis === 80) {
+                  that.tch.direction = 'right'
+                  distance = (that.tch.originDis - distance / 2)
+                  distance = distance < 0 ? distance : 0
+                  item.style = {left: -distance + 'px'}
+                }
               }
             } else if (touchType === 'touchend') {
               if (that.tch.direction === 'left') {
