@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>slide-left-delete</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/static/css/common.css">
+    <script type="text/javascript" src="/static/libs/vue.js"></script>
+    <style media="screen">
+      ul{
+        width: 330px;
+        overflow: hidden;
+        padding: 0 15px;
+        margin: 0 auto;
+      }
+      li{
+        width: 100%;
+        height: 80px;
+        line-height: 80px;
+        overflow: hidden;
+        position: relative;
+        margin-bottom: 20px;
+        border: 1px solid #e0e0e0;
+        background: #f0f0f0;
+        text-align: center;
+      }
+      .li-body{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 9;
+        left: 0;
+        top: 0;
+        background: #fff;
+        transition: all .3s;
+      }
+      .li-action{
+        position: absolute;
+        width: 150px;
+        height: 100%;
+        right: 0;
+        top: 0;
+        z-index: 8;
+        padding-left: 70px;
+        background: #ec9182;
+        color: #fff;
+      }
+    </style>
+
+  </head>
+  <body>
+    <div id="app">
+      <ul>
+        <li v-for="item in liss" @touchStart="touch($event, item)" @touchMove="touch($event, item)" @touchEnd="touch($event, item)">
+          <div class="li-body" :style="item.style">
+            这是li的主体
+          </div>
+          <div class="li-action">
+            操作
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <script type="text/javascript">
+      new Vue({
+        el: '#app',
+        data: {
+          tch: {
+            iniX: 0,
+            originDis: 0,
+            distance: 0,
+            direction: ''
+          },
+          liss: [
+            {
+              name: '1',
+              style: {}
+            },
+            {
+              name: '1',
+              style: {}
+            },
+            {
+              name: '1',
+              style: {}
+            }
+          ]
+        },
+        methods: {
+          touch (event, item) {
+            let that = this
+            let touchType = event.type
+            if (touchType === 'touchstart') {
+              that.tch.iniX = event.touches[0].pageX
+            } else if (touchType === 'touchmove') {
+              let movX = event.touches[0].pageX
+              let iniX = that.tch.iniX
+              let distance = Math.abs(movX - iniX) + that.tch.originDis
+              distance = that.tch.distance = distance < 150 ? distance : 150
+              if (movX < iniX ) {
+                that.tch.direction = 'left'
+                item.style = {left: -distance + 'px'}
+              } else {
+                that.tch.direction = 'right'
+                // item.style = {left: -distance + 'px'}
+              }
+            } else if (touchType === 'touchend') {
+              if (that.tch.direction === 'left') {
+                distance = that.tch.distance > 80 ? 80 : 0
+                that.tch.originDis = distance
+                item.style = {left: -distance + 'px'}
+              } else {
+                if (that.tch.originDis === 80) {
+                  distance = that.tch.originDis = 0
+                  item.style = {left: -distance + 'px'}
+                }
+              }
+            }
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
